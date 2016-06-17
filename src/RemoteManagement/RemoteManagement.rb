@@ -8,7 +8,7 @@ ipInfo = IpInfo.new("eth0")
 
 if ARGV.length.zero?
    $stderr.puts "COMポートの番号を指定してください"
-   $stderr.puts "Usage : ruby serial2nw.rb /dev/ttyAMA0"
+   $stderr.puts "Usage : ruby RemoteManagement.rb /dev/ttyAMA0"
    exit
 end
 
