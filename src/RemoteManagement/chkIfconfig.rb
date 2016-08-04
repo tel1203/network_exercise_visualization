@@ -44,11 +44,11 @@ class IpInfo
 
    def printAll
       print "***** ifconfig実行結果 *****\n"
-      print "[device]     #{@device}\n"
-      print "[HWaddr]     #{@hwaddr}\n"
-      print "[inet addr]  #{@inetaddr}\n"
-      print "[Bcast]      #{@bcast}\n"
-      print "[Mask]       #{@mask}\n"
+      print "[device]      #{@device}\n"
+      print "[HWaddr]      #{@hwaddr}\n"
+      print "[inet addr]   #{@inetaddr}\n"
+      print "[Bcast]       #{@bcast}\n"
+      print "[Mask]        #{@mask}\n"
       print "\n"
    end
 end
@@ -59,7 +59,7 @@ end
 
 def chkIfconfig(serial, ipInfo)
    ipInfo.init()
-   serial.write "ifconfig " + ipInfo.device + "\n"     # ifコマンド発行
+   serial.write "ifconfig " + ipInfo.device + "\n"     # ifconfigコマンド発行
    loop do
       begin
          sleep 0.05
