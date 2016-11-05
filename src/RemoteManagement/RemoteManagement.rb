@@ -36,13 +36,13 @@ SerialPort.open(port, 115200, 8, 1, SerialPort::NONE) do |serial|
       waitPrompt(serial)
 
       # mii-toolコマンド送受信
-      chkLink(serial, linkInfo)
+      linkInfo.command(serial)
 
       # ifconfigコマンド送受信
-      chkIfconfig(serial, ipInfo)
+      ipInfo.command(serial)
       
       # vmstatコマンド送受信
-      chkVmstat(serial, vmInfo)
+      vmInfo.command(serial)
       
       # 管理サーバへデータ転送
       Net::HTTP.version_1_2

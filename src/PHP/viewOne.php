@@ -8,7 +8,6 @@
 
 <table border=1>
 <tr>
-	<th>id</th>
 	<th>Link</th>
 	<th>Device</th>
 	<th>HWaddr</th>
@@ -38,7 +37,6 @@
 	   $query = mysql_query($sql, $link);
 	   while($row = mysql_fetch_object($query)){
 	      echo "<tr>";
-	      echo "<td>" . $row->id . "</td>";
 	      echo "<td>" . $row->Link . "</td>";
 	      echo "<td>" . $row->device . "</td>";
 	      echo "<td>" . $row->HWaddr . "</td>";

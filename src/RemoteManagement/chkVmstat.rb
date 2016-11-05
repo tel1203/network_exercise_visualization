@@ -35,6 +35,31 @@ class VmInfo
    def cpu_id=(value)
       @cpu_id = value
    end
+   
+   # serial経由でvmstatコマンドを発行し
+   # VmInfoの指定したデバイス情報を取得
+   def command(serial)
+      init()
+      serial.write "vmstat\n"     # vmstatコマンド発行
+      begin
+         sleep 0.05
+         recv = serial.readline   # コマンド名の読み飛ばし
+         sleep 0.05
+         recv = serial.readline   # vmstatヘッダーの読み飛ばし
+         sleep 0.05
+         recv = serial.readline   # vmstatヘッダーの読み飛ばし
+         sleep 0.05
+         recv = serial.readline   # vmstatデータの取得
+         ary = recv.scanf("%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s")
+         if ary.length == 17
+            @memory_free = ary[3]
+            @cpu_id    = ary[14]
+         end
+      rescue EOFError
+         
+      end
+      printAll
+   end
 
    def printAll
       print "***** vmstat実行結果 *****\n"
@@ -45,28 +70,4 @@ class VmInfo
 end
 
 
-# serial経由でvmstatコマンドを発行し
-# VmInfoの指定したデバイス情報を取得
 
-def chkVmstat(serial, vmInfo)
-   vmInfo.init()
-   serial.write "vmstat\n"     # vmstatコマンド発行
-   begin
-      sleep 0.05
-      recv = serial.readline   # コマンド名の読み飛ばし
-      sleep 0.05
-      recv = serial.readline   # vmstatヘッダーの読み飛ばし
-      sleep 0.05
-      recv = serial.readline   # vmstatヘッダーの読み飛ばし
-      sleep 0.05
-      recv = serial.readline   # vmstatデータの取得
-      ary = recv.scanf("%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s")
-      if ary.length == 17
-         vmInfo.memory_free = ary[3]
-         vmInfo.cpu_id    = ary[14]
-      end
-   rescue EOFError
-      
-   end
-   vmInfo.printAll
-end

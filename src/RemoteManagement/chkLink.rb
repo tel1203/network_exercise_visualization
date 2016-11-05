@@ -26,6 +26,28 @@ class LinkInfo
    def link=(value)
       @link = value
    end
+   
+   # serial経由でmii-toolコマンドを発行し
+   # LinkInfoの指定したデバイス情報を取得
+   def command(serial)
+      init()
+      serial.write "sudo mii-tool eth0\n"     # mii-toolコマンド発行
+      loop do
+         begin
+            sleep 0.05
+            recv = serial.readline
+            if recv.include?("link ok")
+               @link = 1
+               break
+            else
+               @link = 0
+            end
+         rescue EOFError
+            break
+         end
+      end
+      printAll
+   end
 
    def printAll
       print "***** mii-tool実行結果 *****\n"
@@ -35,25 +57,4 @@ class LinkInfo
 end
 
 
-# serial経由でmii-toolコマンドを発行し
-# LinkInfoの指定したデバイス情報を取得
 
-def chkLink(serial, linkInfo)
-   linkInfo.init()
-   serial.write "sudo mii-tool eth0\n"     # mii-toolコマンド発行
-   loop do
-      begin
-         sleep 0.05
-         recv = serial.readline
-         if recv.include?("link ok")
-            linkInfo.link = 1
-            break
-         else
-            linkInfo.link = 0
-         end
-      rescue EOFError
-         break
-      end
-   end
-   linkInfo.printAll
-end
