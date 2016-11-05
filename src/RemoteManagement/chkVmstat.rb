@@ -20,10 +20,18 @@ class VmInfo
       @cpu_id = ""                    # アイドル時間（CPUが何も処理せずに待っていた時間）の割合
    end
    
+   def memory_free
+      @memory_free
+   end
+   
    def memory_free=(value)
       @memory_free = value
    end
 
+   def cpu_id
+      @cpu_id
+   end
+   
    def cpu_id=(value)
       @cpu_id = value
    end

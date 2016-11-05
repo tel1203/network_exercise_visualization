@@ -16,7 +16,11 @@ class LinkInfo
    end
 
    def init()
-      @link = false              # リンクアップ true、リンクダウン false
+      @link = 0              # リンクアップ 1、リンクダウン 0
+   end
+   
+   def link
+      @link
    end
    
    def link=(value)
@@ -42,10 +46,10 @@ def chkLink(serial, linkInfo)
          sleep 0.05
          recv = serial.readline
          if recv.include?("link ok")
-            linkInfo.link = true
+            linkInfo.link = 1
             break
          else
-            linkInfo.link = false
+            linkInfo.link = 0
          end
       rescue EOFError
          break

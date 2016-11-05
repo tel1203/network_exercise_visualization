@@ -4,6 +4,7 @@ require './prompt'
 require './chkLink'
 require './chkIfconfig'
 require './chkVmstat'
+require 'net/http'
 
 linkInfo = LinkInfo.new()
 ipInfo = IpInfo.new("eth0")
@@ -28,7 +29,7 @@ SerialPort.open(port, 115200, 8, 1, SerialPort::NONE) do |serial|
 
    # コマンド送受信 
    loop do
-      sleep 3
+      sleep 5
       print "*************************************************************\n"
 
       # プロンプト受信待ち
@@ -42,6 +43,15 @@ SerialPort.open(port, 115200, 8, 1, SerialPort::NONE) do |serial|
       
       # vmstatコマンド送受信
       chkVmstat(serial, vmInfo)
+      
+      # 管理サーバへデータ転送
+      Net::HTTP.version_1_2
+      url = URI.parse('http://192.168.1.113/insert.php')
+      req = Net::HTTP::Post.new(url.path)
+      req.set_form_data({'link'=>linkInfo.link, 'Device'=>ipInfo.device, 'HWaddr'=>ipInfo.hwaddr, 'inet_addr'=>ipInfo.inetaddr, 'Bcast'=>ipInfo.bcast, 'Mask'=>ipInfo.mask, 'memory_free'=>vmInfo.memory_free, 'cpu_id'=>vmInfo.cpu_id})
+      res = Net::HTTP::start(url.host, url.port) { |http|
+         http.request(req)
+      }
    end
 end
 

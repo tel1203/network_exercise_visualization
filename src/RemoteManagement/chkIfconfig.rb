@@ -25,17 +25,33 @@ class IpInfo
    def device=(value)
       @device = value
    end
+   
+   def hwaddr
+      @hwaddr
+   end
 
    def hwaddr=(value)
       @hwaddr = value
+   end
+   
+   def inetaddr
+      @inetaddr
    end
 
    def inetaddr=(value)
       @inetaddr = value
    end
 
+   def bcast
+      @bcast
+   end
+   
    def bcast=(value)
       @bcast = value
+   end
+   
+   def mask
+      @mask
    end
    
    def mask=(value)
