@@ -11,10 +11,19 @@
 # mii-toolの結果を格納するクラス
 
 class LinkInfo
-   def initialize()
+   def initialize(device="eth0")
+      @device = device           # デバイス名
       init()
    end
-
+   
+   def device
+      @device
+   end
+   
+   def device=(value)
+      @device = value
+   end
+   
    def init()
       @link = 0              # リンクアップ 1、リンクダウン 0
    end
@@ -31,7 +40,7 @@ class LinkInfo
    # LinkInfoの指定したデバイス情報を取得
    def command(serial)
       init()
-      serial.write "sudo mii-tool eth0\n"     # mii-toolコマンド発行
+      serial.write "sudo mii-tool " + @device + "\n"     # mii-toolコマンド発行
       loop do
          begin
             sleep 0.05
@@ -51,6 +60,7 @@ class LinkInfo
 
    def printAll
       print "***** mii-tool実行結果 *****\n"
+      print "[device]      #{@device}\n"
       print "[link]        #{@link}\n"
       print "\n"
    end

@@ -1,28 +1,52 @@
 <html>
 <head>
-	<title>test</title>
+	<title>insert</title>
 </head>
 <body>
 <h3>insert</h3>
 
 <table border=1>
 <tr>
-	<th>Link</th>
-	<th>Device</th>
-	<th>HWaddr</th>
-	<th>inet addr</th>
-	<th>Bcast</th>
-	<th>Mask</th>
+    <th>Hostname</th>
+	<th>Device0</th>
+	<th>Link0</th>
+	<th>HWaddr0</th>
+	<th>inet addr0</th>
+	<th>Bcast0</th>
+	<th>Mask0</th>
+	<th>Rx0</th>
+	<th>Tx0</th>
+	<th>Device1</th>
+	<th>Link1</th>
+	<th>HWaddr1</th>
+	<th>inet addr1</th>
+	<th>Bcast1</th>
+	<th>Mask1</th>
+	<th>Rx1</th>
+	<th>Tx1</th>
+	<th>Route</th>
 	<th>memory free</th>
 	<th>cpu id</th>
 </tr>
 <tr>
-	<td><?=	$_POST["link"] ?></td>
-	<td><?=	$_POST["Device"] ?></td>
-	<td><?=	$_POST["HWaddr"] ?></td>
-	<td><?=	$_POST["inet_addr"] ?></td>
-	<td><?=	$_POST["Bcast"] ?></td>
-	<td><?=	$_POST["Mask"] ?></td>
+	<td><?=	$_POST["Hostname"] ?></td>
+	<td><?=	$_POST["Device0"] ?></td>
+	<td><?=	$_POST["link0"] ?></td>
+	<td><?=	$_POST["HWaddr0"] ?></td>
+	<td><?=	$_POST["inet_addr0"] ?></td>
+	<td><?=	$_POST["Bcast0"] ?></td>
+	<td><?=	$_POST["Mask0"] ?></td>
+	<td><?=	$_POST["Rx0"] ?></td>
+	<td><?=	$_POST["Tx0"] ?></td>
+	<td><?=	$_POST["Device1"] ?></td>
+	<td><?=	$_POST["link1"] ?></td>
+	<td><?=	$_POST["HWaddr1"] ?></td>
+	<td><?=	$_POST["inet_addr1"] ?></td>
+	<td><?=	$_POST["Bcast1"] ?></td>
+	<td><?=	$_POST["Mask1"] ?></td>
+	<td><?=	$_POST["Rx1"] ?></td>
+	<td><?=	$_POST["Tx1"] ?></td>
+	<td><?=	$_POST["Route"] ?></td>
 	<td><?=	$_POST["memory_free"] ?></td>
 	<td><?=	$_POST["cpu_id"] ?></td>
 </tr>
@@ -41,20 +65,32 @@
 	}
 
 	if($flag == TRUE){
-		$sql = sprintf("insert into rpitbl (Link, device, HWaddr, inet_addr, Bcast, Mask, memory_free, cpu_id) values (%d, '%s', '%s', '%s', '%s', '%s', %d, %d);",
-		  $_POST["link"],
-		  $_POST["Device"],
-		  $_POST["HWaddr"],
-		  $_POST["inet_addr"],
-		  $_POST["Bcast"],
-		  $_POST["Mask"],
+		$sql = sprintf("insert into rpitbl (Hostname, device0, Link0, HWaddr0, inet_addr0, Bcast0, Mask0, Rx0, Tx0, device1, Link1, HWaddr1, inet_addr1, Bcast1, Mask1, Rx1, Tx1, Route, memory_free, cpu_id) values ('%s', '%s', %d, '%s', '%s', '%s', '%s', %d, %d, '%s', %d, '%s', '%s', '%s', '%s', %d, %d, '%s', %d, %d);",
+		  $_POST["Hostname"],
+		  $_POST["Device0"],
+		  $_POST["link0"],
+		  $_POST["HWaddr0"],
+		  $_POST["inet_addr0"],
+		  $_POST["Bcast0"],
+		  $_POST["Mask0"],
+		  $_POST["Rx0"],
+		  $_POST["Tx0"],
+		  $_POST["Device1"],
+		  $_POST["link1"],
+		  $_POST["HWaddr1"],
+		  $_POST["inet_addr1"],
+		  $_POST["Bcast1"],
+		  $_POST["Mask1"],
+		  $_POST["Rx1"],
+		  $_POST["Tx1"],
+		  $_POST["Route"],		  
 		  $_POST["memory_free"],
 		  $_POST["cpu_id"]
 		);
 		echo $sql;
 		$query = mysql_query($sql, $link);
 	}else{
-	   echo "<p>データーベースエラー";
+	   echo "<p>繝�繝ｼ繧ｿ繝ｼ繝吶�ｼ繧ｹ繧ｨ繝ｩ繝ｼ";
 	}
 ?>
 </body>

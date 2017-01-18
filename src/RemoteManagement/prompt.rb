@@ -5,6 +5,7 @@
 # ログイン処理
 
 def login(serial)
+   puts "ログイン中..."
    serial.write "\n"
    loginFlag = false
    while !loginFlag do
@@ -29,6 +30,7 @@ def login(serial)
          end
       end
    end
+   puts "ログイン完了"
 end
 
 

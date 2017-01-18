@@ -16,6 +16,8 @@ class IpInfo
       @inetaddr = ""             # IPv4アドレス
       @bcast = ""                # IPv4ブロードキャストアドレス
       @mask = ""                 # IPv4サブネットマスク
+      @rx = ""                   # 受信パケット数
+      @tx = ""                   # 送信パケット数
    end
    
    def device
@@ -58,6 +60,22 @@ class IpInfo
       @mask = value
    end
    
+   def rx
+      @rx
+   end
+   
+   def rx=(value)
+      @rx = value
+   end
+   
+   def tx
+      @tx
+   end
+   
+   def tx=(value)
+      @tx = value
+   end
+   
    # serial経由でifconfigコマンドを発行し
    # ipInfoの指定したデバイス情報を取得
    def command(serial)
@@ -80,7 +98,18 @@ class IpInfo
                   @bcast    = ary[1]
                   @mask     = ary[2]
                end
+            elsif recv.include?("RX packets:")         # 受信パケット数
+               ary = recv.scanf("RX packets:%s errors:%s dropped:%s overruns:%s frame:%s")
+               if ary.length == 5
+                  @rx = ary[0]
+               end
+            elsif recv.include?("TX packets:")         # 送信パケット数
+               ary = recv.scanf("TX packets:%s errors:%s dropped:%s overruns:%s carrier:%s")
+               if ary.length == 5
+                  @tx = ary[0]
+               end
             end
+
          rescue EOFError
             break
          end
@@ -95,6 +124,8 @@ class IpInfo
       print "[inet addr]   #{@inetaddr}\n"
       print "[Bcast]       #{@bcast}\n"
       print "[Mask]        #{@mask}\n"
+      print "[RX]          #{@rx}\n"
+      print "[TX]          #{@tx}\n"
       print "\n"
    end
 end
